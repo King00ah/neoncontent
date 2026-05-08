@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نيون كونتنت | وكالة محتوى ذكي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2eb;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim: #8a6e2f;
+    --charcoal: #1a1a1a;
+    --mid: #2e2e2e;
+    --muted: #6b6b6b;
+    --border: rgba(201,168,76,0.2);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Cairo', sans-serif; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.6;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem; border-bottom: 0.5px solid var(--border);
+    backdrop-filter: blur(20px); background: rgba(10,10,10,0.85);
+  }
+  .logo { font-family: 'Tajawal', sans-serif; font-size: 1.3rem; font-weight: 800; color: var(--gold); }
+  .logo span { color: var(--white); }
+  nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 0.5px solid var(--border); padding: 6px 16px; border-radius: 100px;
+    font-size: 0.8rem; color: var(--gold); margin-bottom: 2.5rem;
+    background: rgba(201,168,76,0.06); animation: fadeUp 0.8s ease both;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+  h1 { font-family: 'Tajawal', sans-serif; font-size: clamp(3rem,8vw,6.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; animation: fadeUp 0.8s 0.1s ease both; }
+  h1 .gold { color: var(--gold); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 520px; line-height: 1.8; margin: 1.5rem auto 0; font-weight: 300; animation: fadeUp 0.8s 0.2s ease both; }
+  .hero-cta { display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.8s 0.3s ease both; }
+  .btn-gold {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold); color: var(--black); padding: 14px 32px;
+    border-radius: 4px; font-family: 'Cairo', sans-serif; font-weight: 700;
+    font-size: 1rem; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.3); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 0.5px solid var(--border); color: var(--white); padding: 14px 32px;
+    border-radius: 4px; font-family: 'Cairo', sans-serif; font-weight: 400;
+    font-size: 1rem; text-decoration: none; transition: all 0.2s; background: transparent; cursor: pointer;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .stats {
+    display: flex; justify-content: center; gap: 4rem; padding: 3rem 2rem;
+    border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
+    flex-wrap: wrap; position: relative; z-index: 1;
+  }
+  .stat-num { font-family: 'Tajawal', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--gold); line-height: 1; text-align: center; }
+  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 4px; font-weight: 300; text-align: center; }
+
+  section { position: relative; z-index: 1; }
+  .section-inner { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); max-width: 60px; }
+  .section-title { font-family: 'Tajawal', sans-serif; font-size: clamp(1.8rem,4vw,3rem); font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+  .section-desc { color: var(--muted); font-size: 1rem; line-height: 1.8; max-width: 500px; font-weight: 300; }
+  .gold-line { width: 40px; height: 2px; background: var(--gold); margin: 1rem 0 2rem; }
+
+  #services { background: var(--charcoal); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5px; background: var(--border); border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .service-card { background: var(--charcoal); padding: 2.5rem 2rem; transition: background 0.3s; position: relative; overflow: hidden; }
+  .service-card::before { content: ''; position: absolute; top: 0; right: 0; width: 3px; height: 0; background: var(--gold); transition: height 0.3s; }
+  .service-card:hover { background: var(--mid); }
+  .service-card:hover::before { height: 100%; }
+  .service-icon { font-size: 2rem; margin-bottom: 1.2rem; display: block; }
+  .service-name { font-family: 'Tajawal', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--white); }
+  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
+  .service-footer { display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid var(--border); padding-top: 1rem; }
+  .service-price { font-family: 'Tajawal', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); }
+  .service-price small { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+  .service-badge { font-size: 0.75rem; background: rgba(201,168,76,0.1); color: var(--gold); border: 0.5px solid var(--border); padding: 3px 10px; border-radius: 100px; }
+  .order-btn {
+    display: block; width: 100%; margin-top: 1.2rem;
+    background: transparent; border: 0.5px solid var(--gold-dim); color: var(--gold);
+    padding: 10px; border-radius: 4px; font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
+  }
+  .order-btn:hover { background: var(--gold); color: var(--black); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.88); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center; padding: 1.5rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--charcoal); border: 0.5px solid var(--border);
+    border-radius: 12px; width: 100%; max-width: 560px;
+    max-height: 92vh; overflow-y: auto; padding: 2.5rem;
+    position: relative; animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .modal-close {
+    position: absolute; top: 1.2rem; left: 1.2rem;
+    background: transparent; border: 0.5px solid var(--border); color: var(--muted);
+    width: 32px; height: 32px; border-radius: 50%; font-size: 1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+  .modal-pkg { font-family: 'Tajawal', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 0.3rem; }
+  .modal-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 2rem; font-weight: 300; }
+
+  .form-group { margin-bottom: 1.1rem; }
+  .form-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .form-label small { color: var(--muted); font-weight: 300; }
+  .form-input, .form-textarea {
+    width: 100%; background: var(--mid); border: 0.5px solid var(--border);
+    color: var(--white); padding: 11px 13px; border-radius: 6px;
+    font-family: 'Cairo', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+
+  .social-row { display: flex; gap: 8px; }
+  .social-row .form-input { flex: 1; }
+  .analyze-btn {
+    flex-shrink: 0; background: transparent; border: 0.5px solid var(--gold-dim);
+    color: var(--gold); padding: 11px 14px; border-radius: 6px;
+    font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  }
+  .analyze-btn:hover { background: rgba(201,168,76,0.1); }
+  .analyze-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .ai-box {
+    background: rgba(201,168,76,0.04); border: 0.5px solid var(--gold-dim);
+    border-radius: 8px; padding: 1.1rem; margin-top: 0.7rem; display: none;
+  }
+  .ai-box.show { display: block; }
+  .ai-box-label { font-size: 0.73rem; color: var(--gold); font-weight: 600; letter-spacing: 0.08em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .ai-box-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 1.5s infinite; }
+  .ai-box-text { font-size: 0.9rem; line-height: 1.8; color: var(--white); white-space: pre-wrap; }
+
+  .submit-wrap { margin-top: 1.8rem; }
+  .btn-submit {
+    width: 100%; background: var(--gold); color: var(--black);
+    border: none; padding: 14px; border-radius: 6px;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-submit:hover { background: var(--gold-light); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-wa {
+    width: 100%; background: #25D366; color: #fff;
+    border: none; padding: 14px; border-radius: 6px;
+    font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none; margin-top: 0.7rem;
+  }
+  .btn-wa:hover { background: #1ebe5d; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(0,0,0,0.2); border-top-color: var(--black); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  .spinner.light { border-color: rgba(201,168,76,0.2); border-top-color: var(--gold); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .process-step { position: relative; }
+  .step-number { font-family: 'Tajawal', sans-serif; font-size: 5rem; font-weight: 900; color: rgba(201,168,76,0.08); line-height: 1; position: absolute; top: -1rem; right: 0; }
+  .step-content { position: relative; z-index: 1; }
+  .step-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); margin-bottom: 1.2rem; }
+  .step-title { font-family: 'Tajawal', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+  #testimonials { background: var(--charcoal); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .testimonial-card { border: 0.5px solid var(--border); border-radius: 8px; padding: 2rem; background: rgba(201,168,76,0.02); transition: border-color 0.3s; }
+  .testimonial-card:hover { border-color: var(--gold-dim); }
+  .quote-mark { font-size: 3rem; color: var(--gold); line-height: 0.5; margin-bottom: 1rem; display: block; opacity: 0.4; font-weight: 900; font-family: 'Tajawal', sans-serif; }
+  .quote-text { font-size: 0.95rem; line-height: 1.8; color: var(--white); font-weight: 300; margin-bottom: 1.5rem; font-style: italic; }
+  .quote-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: var(--black); flex-shrink: 0; }
+  .author-name { font-weight: 600; font-size: 0.9rem; }
+  .author-role { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+
+  .cta-section { text-align: center; padding: 8rem 2rem; position: relative; overflow: hidden; }
+  .cta-glow { position: absolute; width: 500px; height: 300px; background: radial-gradient(ellipse, rgba(201,168,76,0.1) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+  .cta-section h2 { font-family: 'Tajawal', sans-serif; font-size: clamp(2rem,5vw,4rem); font-weight: 800; margin-bottom: 1rem; position: relative; }
+  .cta-section p { color: var(--muted); font-size: 1.05rem; font-weight: 300; margin-bottom: 2.5rem; position: relative; }
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #25D366; color: #fff; padding: 16px 40px; border-radius: 4px;
+    font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 1.1rem;
+    text-decoration: none; transition: all 0.25s; position: relative;
+  }
+  .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-3px); box-shadow: 0 12px 40px rgba(37,211,102,0.35); }
+
+  footer { border-top: 0.5px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; position: relative; z-index: 1; }
+  .footer-text { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  .reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .stats { gap: 2rem; }
+    footer { flex-direction: column; text-align: center; }
+    .modal { padding: 2rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">نيون <span>كونتنت</span></div>
+  <a href="#services">الخدمات</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-tag">وكالة محتوى مدعومة بالذكاء الاصطناعي</div>
+  <h1>محتوى يبيع،<br><span class="gold">يومياً</span> — بدون تعب</h1>
+  <p class="hero-sub">نكتب لك المنشورات، الإعلانات، والسكريبتات باستخدام أحدث تقنيات الذكاء الاصطناعي. أسرع، أذكى، ومخصص لك.</p>
+  <div class="hero-cta">
+    <a href="#services" class="btn-gold">اطلب خدمتك الآن</a>
+    <a href="#services" class="btn-ghost">شوف الخدمات ↓</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div><div class="stat-num">+50</div><div class="stat-label">عميل سعيد</div></div>
+  <div><div class="stat-num">24h</div><div class="stat-label">وقت التسليم</div></div>
+  <div><div class="stat-num">100%</div><div class="stat-label">ضمان الرضا</div></div>
+  <div><div class="stat-num">5★</div><div class="stat-label">تقييم العملاء</div></div>
+</div>
+
+<section id="services">
+  <div class="section-inner">
+    <div class="services-header">
+      <div>
+        <div class="section-label">ما نقدمه</div>
+        <h2 class="section-title">اختر الباقة المناسبة</h2>
+        <div class="gold-line"></div>
+        <p class="section-desc">اضغط "اطلب الآن" — الذكاء الاصطناعي سيطلب منك تفاصيلك ويحضّر عرضاً مخصصاً لك فوراً.</p>
+      </div>
+    </div>
+    <div class="services-grid reveal">
+
+      <div class="service-card">
+        <span class="service-icon">📱</span>
+        <div class="service-name">باقة سوشيال ميديا</div>
+        <div class="service-desc">30 منشور جاهز للنشر على انستغرام وتويتر وفيسبوك. كتابة احترافية تجذب التفاعل وتبني جمهور.</div>
+        <div class="service-footer">
+          <div class="service-price">$50 <small>/ شهر</small></div>
+          <span class="service-badge">الأكثر طلباً</span>
+        </div>
+        <button class="order-btn" onclick="openModal('باقة سوشيال ميديا','30 منشور احترافي لانستغرام وتويتر وفيسبوك بأسلوب يناسب نشاطك')">اطلب الآن ←</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">🎬</span>
+        <div class="service-name">سكريبت يوتيوب</div>
+        <div class="service-desc">سكريبت فيديو يوتيوب كامل يشمل الهوك، المحتوى، والـ CTA. مكتوب بأسلوب يناسب قناتك.</div>
+        <div class="service-footer">
+          <div class="service-price">$20 <small>/ فيديو</small></div>
+          <span class="service-badge">سريع</span>
+        </div>
+        <button class="order-btn" onclick="openModal('سكريبت يوتيوب','سكريبت فيديو كامل مع هوك جذاب وCTA فعال')">اطلب الآن ←</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">📣</span>
+        <div class="service-name">إعلانات مدفوعة</div>
+        <div class="service-desc">نصوص إعلانية لـ Meta وGoogle مكتوبة لتحقق أعلى نسبة نقر وتحويل. تتضمن 3 نسخ مختلفة.</div>
+        <div class="service-footer">
+          <div class="service-price">$35 <small>/ حملة</small></div>
+          <span class="service-badge">فعال</span>
+        </div>
+        <button class="order-btn" onclick="openModal('إعلانات مدفوعة','3 نسخ إعلانية لـ Meta وGoogle لأعلى نسبة تحويل')">اطلب الآن ←</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">✉️</span>
+        <div class="service-name">نشرة بريدية</div>
+        <div class="service-desc">نشرة إيميل أسبوعية أو شهرية تبقي عملاءك متفاعلين. أسلوب مثير للاهتمام ويدفع للقراءة.</div>
+        <div class="service-footer">
+          <div class="service-price">$25 <small>/ نشرة</small></div>
+          <span class="service-badge">جديد</span>
+        </div>
+        <button class="order-btn" onclick="openModal('نشرة بريدية','نشرة إيميل أسبوعية أو شهرية تُبقي جمهورك متفاعلاً')">اطلب الآن ←</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">🌐</span>
+        <div class="service-name">محتوى موقع</div>
+        <div class="service-desc">كتابة صفحات الموقع (رئيسية، من نحن، الخدمات) بأسلوب SEO-friendly يساعدك تظهر في جوجل.</div>
+        <div class="service-footer">
+          <div class="service-price">$80 <small>/ موقع</small></div>
+          <span class="service-badge">شامل</span>
+        </div>
+        <button class="order-btn" onclick="openModal('محتوى موقع','كتابة صفحات الموقع بأسلوب SEO يصدّرك على جوجل')">اطلب الآن ←</button>
+      </div>
+
+      <div class="service-card">
+        <span class="service-icon">⭐</span>
+        <div class="service-name">باقة VIP الشهرية</div>
+        <div class="service-desc">كل شيء: سوشيال ميديا + إعلانات + نشرة بريدية + دعم فوري على واتساب طوال الشهر.</div>
+        <div class="service-footer">
+          <div class="service-price">$200 <small>/ شهر</small></div>
+          <span class="service-badge">الأفضل قيمة</span>
+        </div>
+        <button class="order-btn" onclick="openModal('باقة VIP الشهرية','كل الخدمات مجتمعة + دعم واتساب مستمر طوال الشهر')">اطلب الآن ←</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-inner">
+    <div class="section-label">الطريقة</div>
+    <h2 class="section-title">كيف تشتغل العملية؟</h2>
+    <div class="gold-line"></div>
+    <div class="process-grid reveal">
+      <div class="process-step">
+        <div class="step-number">١</div>
+        <div class="step-content"><div class="step-dot"></div><div class="step-title">تختار الباقة</div><div class="step-desc">اضغط "اطلب الآن" على الخدمة اللي تناسبك.</div></div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">٢</div>
+        <div class="step-content"><div class="step-dot"></div><div class="step-title">تعبي النموذج</div><div class="step-desc">الذكاء الاصطناعي يحلل بيانتك ويعطيك اقتراح مخصص.</div></div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">٣</div>
+        <div class="step-content"><div class="step-dot"></div><div class="step-title">ننجز خلال 24h</div><div class="step-desc">المحتوى جاهز للنشر في أقل من يوم واحد.</div></div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">٤</div>
+        <div class="step-content"><div class="step-dot"></div><div class="step-title">تعديل مجاني</div><div class="step-desc">نعدل بدون رسوم إضافية حتى ترضى 100%.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-label">آراء العملاء</div>
+    <h2 class="section-title">شو قالوا عنا</h2>
+    <div class="gold-line"></div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">متوقعتش النتيجة تكون بهالمستوى. المنشورات جذبت تفاعل ما شفته من قبل على صفحتي.</p>
+        <div class="quote-author"><div class="author-avatar">سم</div><div><div class="author-name">سمر المطيري</div><div class="author-role">صاحبة متجر عطور</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">التسليم خلال 24 ساعة مش مصدقة. وفر علي أيام من الكتابة. رح أرجع بالتأكيد!</p>
+        <div class="quote-author"><div class="author-avatar">أح</div><div><div class="author-name">أحمد الخليل</div><div class="author-role">مصور فوتوغرافي</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="quote-text">الإعلانات اللي كتبوها لي حققت ضعف النتائج مقارنة بإعلاناتي القديمة. استثمار يستاهل.</p>
+        <div class="quote-author"><div class="author-avatar">نر</div><div><div class="author-name">نور الرشيد</div><div class="author-role">صاحب مطعم</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="section-label" style="justify-content:center;margin-bottom:1rem;">ابدأ اليوم</div>
+  <h2>جاهز تحول متابعينك<br>إلى <span style="color:var(--gold)">عملاء؟</span></h2>
+  <p>تواصل معنا مباشرة أو اطلب باقتك من الأعلى</p>
+  <a href="https://wa.me/4915560919162?text=السلام%20عليكم،%20أبي%20أعرف%20أكثر%20عن%20خدماتكم" class="btn-whatsapp" target="_blank">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.608L0 24l6.608-1.33A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.502-5.184-1.38l-.372-.22-3.865.778.814-3.768-.242-.387A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    راسلنا على واتساب
+  </a>
+</section>
+
+<footer>
+  <div class="logo">نيون <span>كونتنت</span></div>
+  <div class="footer-text">© 2025 نيون كونتنت — جميع الحقوق محفوظة</div>
+  <div class="footer-text">مدعوم بالذكاء الاصطناعي ❤</div>
+</footer>
+
+<!-- ═══════════ MODAL ═══════════ -->
+<div class="modal-overlay" id="overlay" onclick="handleBg(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <div class="modal-pkg" id="mPkg"></div>
+    <div class="modal-sub" id="mSub"></div>
+
+    <div class="form-group">
+      <label class="form-label">اسمك <small>(مطلوب)</small></label>
+      <input class="form-input" id="fName" type="text" placeholder="مثال: محمد العلي">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">نوع نشاطك / عملك <small>(مطلوب)</small></label>
+      <input class="form-input" id="fBiz" type="text" placeholder="مثال: متجر ملابس، مطعم، قناة يوتيوب...">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">جمهورك المستهدف <small>(اختياري)</small></label>
+      <input class="form-input" id="fAudience" type="text" placeholder="مثال: شباب 18-30 يهتمون بالموضة">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">تفاصيل إضافية <small>(اختياري)</small></label>
+      <textarea class="form-textarea" id="fExtra" placeholder="أي معلومات تساعدنا نقدم لك أفضل نتيجة..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">رابط صفحتك على السوشيال ميديا <small>(اختياري — لتحليل مخصص)</small></label>
+      <div class="social-row">
+        <input class="form-input" id="fSocial" type="url" placeholder="https://instagram.com/yourpage">
+        <button class="analyze-btn" id="analyzeBtn" onclick="analyzeSocial()">🔍 حلّل</button>
+      </div>
+      <div class="ai-box" id="socialBox">
+        <div class="ai-box-label">تحليل الصفحة</div>
+        <div class="ai-box-text" id="socialText"></div>
+      </div>
+    </div>
+
+    <div class="ai-box" id="proposalBox" style="margin-bottom:0">
+      <div class="ai-box-label">اقتراحك المخصص من الذكاء الاصطناعي</div>
+      <div class="ai-box-text" id="proposalText"></div>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="btn-submit" id="submitBtn" onclick="generateProposal()">✨ احصل على اقتراحك المخصص</button>
+      <a class="btn-wa" id="waBtn" style="display:none" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.025.507 3.934 1.395 5.608L0 24l6.608-1.33A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.502-5.184-1.38l-.372-.22-3.865.778.814-3.768-.242-.387A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        أرسل طلبك عبر واتساب الآن
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const PHONE = '4915560919162';
+let currentPkg = '';
+
+function openModal(pkg, sub) {
+  currentPkg = pkg;
+  document.getElementById('mPkg').textContent = pkg;
+  document.getElementById('mSub').textContent = sub;
+  ['fName','fBiz','fAudience','fExtra','fSocial'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('socialBox').classList.remove('show');
+  document.getElementById('proposalBox').classList.remove('show');
+  document.getElementById('waBtn').style.display = 'none';
+  document.getElementById('submitBtn').style.display = 'flex';
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').innerHTML = '✨ احصل على اقتراحك المخصص';
+  document.getElementById('analyzeBtn').disabled = false;
+  document.getElementById('analyzeBtn').innerHTML = '🔍 حلّل';
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleBg(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
+
+async function stream(el, text, delay = 10) {
+  el.textContent = '';
+  for (const ch of text) {
+    el.textContent += ch;
+    await new Promise(r => setTimeout(r, delay));
+  }
+}
+
+async function callAI(prompt) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  if (!res.ok) throw new Error('API error');
+  const data = await res.json();
+  return data.content?.map(b => b.text || '').join('') || '';
+}
+
+async function analyzeSocial() {
+  const url = document.getElementById('fSocial').value.trim();
+  if (!url) { alert('الرجاء إدخال رابط الصفحة أولاً'); return; }
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner light"></span>';
+  const biz = document.getElementById('fBiz').value || 'غير محدد';
+  try {
+    const result = await callAI(
+      `أنت خبير تسويق رقمي محترف. العميل يعمل في مجال: "${biz}" ويريد خدمة "${currentPkg}".
+أدخل رابط صفحته على السوشيال ميديا: ${url}
+
+بناءً على الرابط، اكتب تحليلاً سريعاً (4-5 نقاط) يشمل:
+- نوع الحساب والمنصة المتوقعة
+- نقاط القوة والفرص المتاحة
+- أبرز مشكلات المحتوى الحالي
+- 2 توصية عملية فورية
+اكتب بالعربي بأسلوب مباشر وعملي، بدون مقدمات زائدة.`
+    );
+    document.getElementById('socialBox').classList.add('show');
+    await stream(document.getElementById('socialText'), result, 8);
+    btn.innerHTML = '✅ تم';
+  } catch {
+    document.getElementById('socialBox').classList.add('show');
+    document.getElementById('socialText').textContent = 'تعذّر التحليل التلقائي، لكن يمكننا المتابعة والتحليل يدوياً بعد تواصلك معنا.';
+    btn.innerHTML = '🔍 حلّل';
+    btn.disabled = false;
+  }
+}
+
+async function generateProposal() {
+  const name     = document.getElementById('fName').value.trim();
+  const biz      = document.getElementById('fBiz').value.trim();
+  if (!name || !biz) { alert('الرجاء إدخال اسمك ونوع عملك على الأقل.'); return; }
+  const audience = document.getElementById('fAudience').value || 'عام';
+  const extra    = document.getElementById('fExtra').value || 'لا يوجد';
+  const social   = document.getElementById('fSocial').value || 'لم يُذكر';
+  const analysis = document.getElementById('socialText').textContent || '';
+  const btn      = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> جاري التحليل...';
+  try {
+    const result = await callAI(
+      `أنت مستشار تسويق محترف في وكالة محتوى ذكاء اصطناعي.
+
+بيانات العميل:
+- الاسم: ${name}
+- النشاط: ${biz}
+- الجمهور: ${audience}
+- الباقة: ${currentPkg}
+- تفاصيل: ${extra}
+- رابط السوشيال: ${social}
+${analysis ? '- تحليل الصفحة: ' + analysis.substring(0,400) : ''}
+
+اكتب اقتراحاً مخصصاً وعملياً يشمل:
+1. ترحيب شخصي باسم العميل
+2. ما الذي ستفعله بالضبط في هذه الباقة لنشاطه تحديداً
+3. ثلاث أفكار محتوى جاهزة تناسب مجاله مباشرة
+4. ماذا يتضمن السعر وما الخطوة التالية
+
+اكتب بالعربي بأسلوب ودي وواثق، موجز ومقنع. لا تتجاوز 220 كلمة.`
+    );
+    document.getElementById('proposalBox').classList.add('show');
+    await stream(document.getElementById('proposalText'), result, 9);
+    btn.style.display = 'none';
+    const waText = encodeURIComponent(
+      `السلام عليكم 👋\nاسمي ${name} وأنا مهتم بـ${currentPkg}.\nنشاطي: ${biz}\nأرسلت طلبي من الموقع وأريد المتابعة.`
+    );
+    const waBtn = document.getElementById('waBtn');
+    waBtn.href = `https://wa.me/${PHONE}?text=${waText}`;
+    waBtn.style.display = 'flex';
+  } catch {
+    btn.disabled = false;
+    btn.innerHTML = '⚠️ حدث خطأ — حاول مجدداً';
+  }
+}
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
